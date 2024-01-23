@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 08:57:22 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/22 16:33:03 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:25:39 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	count;
+	size_t	i;
 	char	*schar;
 
-	count = 0;
+	i = 0;
 	schar = (char *) s;
-	while (schar[count] != '\0')
-		count++;
-	return (count);
+	while (schar[i] != '\0')
+		i++;
+	return (i);
 }
 
 void	*ft_calloc(size_t count, size_t size)
