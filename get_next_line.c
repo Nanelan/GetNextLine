@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 13:51:31 by crmunoz-          #+#    #+#             */
+/*   Created: 2024/01/02 10:42:42 by crmunoz-          #+#    #+#             */
 /*   Updated: 2024/01/23 20:22:53 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -60,20 +60,29 @@ char	*get_next_line(int fd)
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*text;
 	int			bytesread;
-	int			j;
 	char		*line;
 
 	line = NULL;
-	j = 0;
+	text = NULL;
+	if (!fd)
+		return (NULL);
 	bytesread = read(fd, buffer, BUFFER_SIZE);
-	buffer[bytesread] = '\0';
+
 	if (bytesread > 0)
 	{
-		text = ft_strjoin(text, buffer);
+		buffer[bytesread] = '\0';
+		if (!text)
+			text = ft_strdup(buffer);
+		else
+			text = ft_strjoin(text, buffer);
+		if (text == NULL)
+			return (NULL);
 		if (ft_strchr(text, '\n') == NULL)
 			get_next_line(fd);
 		else
 		{
+			if (line)
+				free(line);
 			line = ft_malloc_line(text);
 			text = ft_free_line(text);
 		}
