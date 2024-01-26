@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 08:57:22 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/25 20:54:43 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:10:00 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ size_t	ft_strlen(const char *s)
 
 	i = 0;
 	schar = (char *) s;
-	while (schar[i] != '\0')
-		i++;
+	if (*schar)
+	{
+		while (schar[i] != '\0')
+			i++;
+	}
 	return (i);
 }
 
@@ -70,24 +73,21 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (s3);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
+	unsigned char	d;
 	int				i;
-	char			*ptrchar;
-	unsigned char	c2;
 
-	c2 = (unsigned char) c;
-	ptrchar = (char *) s;
 	i = 0;
-	while (ptrchar[i] != '\0')
+	d = (unsigned char)c;
+	while (*s != d && *s != '\n' && *s != 0)
 	{
-		if (ptrchar[i] == c2)
-			return (&ptrchar[i]);
+		s++;
 		i++;
 	}
-	if (ptrchar[i] == c2)
-		return (&ptrchar[i]);
-	return (NULL);
+	if (*s == d)
+		return (i);
+	return (-1);
 }
 
 char	*ft_strdup(const char *s1)

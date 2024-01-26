@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 10:42:42 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/25 21:18:51 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:11:34 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_free_line(char *text)
 	free(text);
 	return (temptext);
 }
+
 
 char	*ft_malloc_line(char *text)
 {
@@ -82,10 +83,12 @@ char	*get_next_line(int fd)
 		free(text);
 		text = auxtext;
 	}
-	if (text == NULL)
-		return (NULL);
-	if (ft_strchr(text, '\n') == NULL)
+	if ((ft_strchr(text, '\n') == -1) && bytesread > 0)
 		return (get_next_line(fd));
+	else if (bytesread == 0 && text != NULL)
+		return (text);
+	else if (bytesread == 0 && !text)
+		return (NULL);
 	else
 	{
 		if (line)
@@ -104,8 +107,9 @@ int	main()
 	printf("1. La puta función de los cojones: %s", get_next_line(fd));
 	printf("2. La puta función de los cojones: %s", get_next_line(fd));
 	printf("3. La puta función de los cojones: %s", get_next_line(fd));
-}
-*/
+}*/
+
+
 /*
 #include <stdio.h>
 int	main(){
