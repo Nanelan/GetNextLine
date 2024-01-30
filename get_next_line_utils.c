@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 08:57:22 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/26 14:10:00 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:50:32 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlen(const char *s)
 
 	i = 0;
 	schar = (char *) s;
-	if (*schar)
+	if (schar)
 	{
 		while (schar[i] != '\0')
 			i++;
@@ -52,6 +52,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
+	if (!s1)
+		s1 = ft_calloc(1, 1);
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	i = 0;
@@ -70,6 +72,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	s3[i + j] = '\0';
+	free ((void *)s1);
 	return (s3);
 }
 
@@ -80,7 +83,7 @@ int	ft_strchr(const char *s, int c)
 
 	i = 0;
 	d = (unsigned char)c;
-	while (*s != d && *s != '\n' && *s != 0)
+	while (*s != d && *s != 0)
 	{
 		s++;
 		i++;
