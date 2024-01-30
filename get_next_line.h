@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 11:51:23 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/26 14:10:52 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:21:58 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strchr(const char *s, int c);

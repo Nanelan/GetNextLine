@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 10:42:42 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/29 17:36:52 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/30 21:11:21 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*ft_free_line(char *text)
 		return (NULL);
 	while (text[i] != '\n')
 		i++;
+	i++;
 	temptext = (char *)malloc(1 + ft_strlen(text) - i);
 	if (temptext == NULL)
 		return (NULL);
-	i++;
 	while (text[i + j] != '\0')
 	{
 		temptext[j] = text[i + j];
@@ -36,6 +36,11 @@ char	*ft_free_line(char *text)
 	}
 	temptext[j] = '\0';
 	free(text);
+	if (j == 0)
+	{
+		free(temptext);
+		return (NULL);
+	}
 	return (temptext);
 }
 
@@ -92,9 +97,16 @@ char	*get_next_line(int fd)
 	int			bytesread;
 	char		*line;
 
+	if (fd < 0)
+		return (NULL);
 	bytesread = read(fd, buffer, BUFFER_SIZE);
 	if (bytesread == -1)
+	{
+		if (text)
+			free(text);
+		text = NULL;
 		return (NULL);
+	}
 	buffer[bytesread] = '\0';
 	if (!text && bytesread > 0)
 		text = ft_strdup(buffer);
@@ -104,7 +116,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	else if ((ft_strchr(text, '\n') == -1) && bytesread > 0)
 		return (get_next_line(fd));
-	else if (bytesread == 0 && text != NULL)
+	else if (bytesread == 0 && text != NULL && ft_strchr(text, '\n') == -1)
 	{
 		line = ft_final_line(text);
 		text = NULL;
@@ -123,9 +135,9 @@ char	*get_next_line(int fd)
 int	main()
 {
 	int fd = open ("hola", O_RDONLY);
-	printf("1. La puta función de los cojones: %s\n", get_next_line(fd));
-	printf("2. La puta función de los cojones: %s\n", get_next_line(fd));
-	printf("3. La puta función de los cojones: %s\n", get_next_line(fd));
+	printf("1. La puta función de los cojones: %s", get_next_line(fd));
+	printf("2. La puta función de los cojones: %s", get_next_line(fd));
+	printf("3. La puta función de los cojones: %s", get_next_line(fd));
 }*/
 
 

@@ -6,7 +6,7 @@
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 08:57:22 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/29 16:50:32 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/30 21:11:23 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*s3;
 	int		s1len;
@@ -72,7 +72,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	s3[i + j] = '\0';
-	free ((void *)s1);
+	free (s1);
 	return (s3);
 }
 
