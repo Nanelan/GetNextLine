@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crmunoz- <crmunoz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 10:42:42 by crmunoz-          #+#    #+#             */
-/*   Updated: 2024/01/31 14:58:39 by crmunoz-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:13:09 by crmunoz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 char	*ft_free_line(char *text)
@@ -83,8 +83,7 @@ char	*ft_final_line(char *text)
 		i++;
 	}
 	line[i] = '\0';
-	if (text)
-		free(text);
+	free (text);
 	return (line);
 }
 
@@ -92,21 +91,22 @@ char	*manage_storage(int fd, int bytesread, char **text)
 {
 	char	*line;
 
-	if (bytesread == 0 && *text == NULL)
+	line = NULL;
+	if (bytesread == 0 && text[fd] == NULL)
 		return (NULL);
-	else if ((ft_strchr(*text, '\n') == -1) && bytesread > 0)
+	else if ((ft_strchr(text[fd], '\n') == -1) && bytesread > 0)
 		return (get_next_line(fd));
-	else if (bytesread == 0 && *text != NULL
-		&& ft_strchr(*text, '\n') == -1)
+	else if (bytesread == 0 && text[fd] != NULL
+		&& ft_strchr(text[fd], '\n') == -1)
 	{
-		line = ft_final_line(*text);
-		*text = NULL;
+		line = ft_final_line(text[fd]);
+		text[fd] = NULL;
 		return (line);
 	}
 	else
 	{
-		line = ft_malloc_line(*text);
-		*text = ft_free_line(*text);
+		line = ft_malloc_line(text[fd]);
+		text[fd] = ft_free_line(text[fd]);
 		return (line);
 	}
 }
@@ -114,7 +114,7 @@ char	*manage_storage(int fd, int bytesread, char **text)
 char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE + 1];
-	static char	*text;
+	static char	*text[1024];
 	int			bytesread;
 
 	if (fd < 0)
@@ -122,17 +122,17 @@ char	*get_next_line(int fd)
 	bytesread = read(fd, buffer, BUFFER_SIZE);
 	if (bytesread == -1)
 	{
-		if (text)
-			free(text);
-		text = NULL;
+		if (text[fd])
+			free(text[fd]);
+		text[fd] = NULL;
 		return (NULL);
 	}
 	buffer[bytesread] = '\0';
-	if (!text && bytesread > 0)
-		text = ft_strdup(buffer);
+	if (!text[fd] && bytesread > 0)
+		text[fd] = ft_strdup(buffer);
 	else if (bytesread > 0)
-		text = ft_strjoin(text, buffer);
-	return (manage_storage(fd, bytesread, &text));
+		text[fd] = ft_strjoin(text[fd], buffer);
+	return (manage_storage(fd, bytesread, text));
 }
 /*
 #include <stdio.h>
